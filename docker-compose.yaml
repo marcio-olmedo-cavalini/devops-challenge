@@ -1,0 +1,46 @@
+version: '3'
+
+services: 
+
+  java:
+    build:
+      context: ./java
+      dockerfile: Dockerfile
+    image: marcioolmedocavalini/java:1
+    container_name: java
+    hostname: java
+    networks: 
+      - challenge
+    tty: true
+    ports: 
+      - "8080:8080"
+
+  nginx:
+    build: 
+      context: ./nginx
+      dockerfile: Dockerfile
+    image: marcioolmedocavalini/nginx:1
+    container_name: nginx
+    hostname: nginx
+    networks: 
+      - challenge
+    tty: true
+    ports: 
+      - "8088:8089"
+
+  haproxy:
+    build: 
+      context: ./haproxy
+      dockerfile: Dockerfile
+    image: marcioolmedocavalini/haproxy:1
+    container_name: haproxy
+    hostname: haproxy
+    networks: 
+      - challenge
+    tty: true
+    ports: 
+      - "80:80"
+
+networks: 
+  challenge:
+    driver: bridge      
